@@ -3,9 +3,9 @@
 require "rubygems"
 require "bundler/setup"
 require "nokogiri"
-# require "ruby-debug"
+require "ruby-debug"
 
-# debugger
+debugger
 
 x = 1
 
