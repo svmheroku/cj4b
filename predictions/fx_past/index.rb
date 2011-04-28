@@ -19,4 +19,8 @@ myf.close
 
 mth = html_doc.methods
 
-p mth.to_s
+# p mth.to_s
+
+td_elems = html_doc.search("td")
+
+sz = td_elems.size
