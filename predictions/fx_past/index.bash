@@ -30,12 +30,14 @@ set -x
 cd /pt/s/rl/cj/predictions/fx_past/
 
 # Get the data spooled into tmp.html via a join of 3 types of tables.
-sqt>fx_past.txt<<EOF
+sqt>/tmp/fx_past.txt<<EOF
 @fx_past.sql
 EOF
-grep -v 'rows selected' _fx_past_spool.html.erb > tmp.html
+grep -v 'rows selected' /tmp/_fx_past_spool.html.erb > /tmp/tmp.html
 
-exit
-
-# Use Nokogiri to massage the HTML in tmp.html and redirect it into the partial full of a-tags:
+# Use Nokogiri to massage the HTML in tmp.html and redirect it into the partial full of a-tags.
+# The partial is rendered in this file: 
+# app/views/predictions/fx_past.haml
 bundle exec ruby index.rb > /pt/s/rl/bikle101/app/views/predictions/_fx_past_spool.html.erb
+
+exit 0

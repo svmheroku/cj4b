@@ -80,7 +80,7 @@ MIN(ydate)
 ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD';
 SET TIME off TIMING off ECHO off HEADING off
 SET MARKUP HTML ON TABLE "id='table_fx_past'" ENTMAP ON
-SPOOL _fx_past_spool.html.erb
+SPOOL /tmp/_fx_past_spool.html.erb
 
 SELECT
 'Week: '||MIN(ydate)||' Through '||MAX(ydate) wweek
@@ -96,7 +96,7 @@ SET MARKUP HTML OFF
 -- This SELECT gives me syntax to run a series of SQL scripts.
 -- Each script will give me data for 1 week.
 
-SPOOL fx_past_week.txt
+SPOOL /tmp/fx_past_week.txt
 SELECT
 '@fx_past_week.sql '||MIN(ydate) cmd
 FROM fxpst12
