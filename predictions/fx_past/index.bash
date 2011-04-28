@@ -40,4 +40,17 @@ grep -v 'rows selected' /tmp/_fx_past_spool.html.erb > /tmp/tmp.html
 # app/views/predictions/fx_past.haml
 bundle exec ruby index.rb > /pt/s/rl/bikle101/app/views/predictions/_fx_past_spool.html.erb
 
+# Fill each of the partials with data.
+# Start by pulling some syntax out of fx_past_week.txt
+# which was created by my call to fx_past.sql
+grep fx_past_week.sql /tmp/fx_past_week.txt > /tmp/run_fx_past_week.sql
+
+# Now run the syntax I pulled out of fx_past_week.txt:
+sqt>/tmp/run_fx_past_week.txt<<EOF
+@/tmp/run_fx_past_week.sql
+EOF
+
+# bundle exec rdebug run_fx_past_week.rb
+bundle exec ruby run_fx_past_week.rb
+
 exit 0
