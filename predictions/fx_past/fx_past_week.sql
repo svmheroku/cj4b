@@ -74,8 +74,8 @@ ORDER BY pair
 COLUMN anote FORMAT A120 HEADING 'Note:'
 
 SELECT
-'The above tables are summaries of predictions. A list of all predictions is displayed below '||
-'if you want to load it into a spreadsheet.' anote
+'The above tables are summaries of predictions. A list of high-confidence-predictions is displayed below '||
+'should you want to load it into a spreadsheet.' anote
 FROM dual
 /
 

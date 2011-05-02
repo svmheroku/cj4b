@@ -27,8 +27,8 @@ glb.each{|fn|
   past_forex_predictions = '<a href="/predictions/fx_past">Past Forex Predictions</a>'
   bread_crumbs = "#{site_map} > #{predictions} > #{forex} > #{past_forex_predictions} > Week of: #{the_date}"
 
-  # generate h5-element from the_date
-  h5_element = "<h5>Week of: #{the_date}</h5>"
+  # generate h4-element from the_date
+  h4_element = "<h4>Week of: #{the_date}</h4>"
 
   # Next, I feed the file to Nokogiri so I can access HTML in the file:
   # html_doc = open(fn){ |f| Hpricot(f) }
@@ -37,7 +37,7 @@ glb.each{|fn|
   myf.close
 
   # Generate some a-elements from th-elements.
-  th_elems = html_doc.search("th")
+  th_elems = html_doc.search("table")[0].search("th")
 
   th_elems.each {|elm| 
     ei_h =   elm.inner_html
@@ -52,7 +52,7 @@ glb.each{|fn|
   # href="/predictions/fx_past_wk2011_01_30"
   html_f = File.new("/pt/s/rl/bikle101/app/views/predictions/fx_past_wk#{the_date}.html.erb", "w")
   # Fill the file with HTML which I had obtained from sqlplus:
-  html_f.puts bread_crumbs + h5_element + some_html
+  html_f.puts bread_crumbs + h4_element + some_html
   p "#{html_f.path} File written"
   html_f.close
 }
