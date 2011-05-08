@@ -8,3 +8,5 @@
 # rvm use ruby-1.9.2-head@gs1 --default
 
 . /pt/s/rl/cj/.cj
+
+bundle exec rspec index_spec.rb
