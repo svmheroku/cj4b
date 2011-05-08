@@ -3,9 +3,19 @@ GEM
   specs:
     archive-tar-minitar (0.5.2)
     columnize (0.3.2)
+    diff-lcs (1.1.2)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     nokogiri (1.4.4)
+    rake (0.8.7)
+    rspec (2.5.0)
+      rspec-core (~> 2.5.0)
+      rspec-expectations (~> 2.5.0)
+      rspec-mocks (~> 2.5.0)
+    rspec-core (2.5.2)
+    rspec-expectations (2.5.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.5.0)
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -22,4 +32,6 @@ PLATFORMS
 
 DEPENDENCIES
   nokogiri
+  rake (= 0.8.7)
+  rspec (= 2.5.0)
   ruby-debug19
