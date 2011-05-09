@@ -75,7 +75,7 @@ COLUMN anote FORMAT A120 HEADING 'Note:'
 
 SELECT
 'The above tables are summaries of predictions. A list of high-confidence-predictions is displayed below '||
-'should you want to load it into a spreadsheet.' anote
+'should you want to load it into a spreadsheet. The timestamp at hour 0 is GMT which is London time (in the winter).' anote
 FROM dual
 /
 
