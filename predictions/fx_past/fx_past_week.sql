@@ -75,11 +75,11 @@ COLUMN anote FORMAT A120 HEADING 'Note:'
 
 SELECT
 'The above tables are summaries of predictions. A list of high-confidence-predictions is displayed below '||
-'should you want to load it into a spreadsheet. The timestamp at hour 0 is GMT which is London time (in the winter).' anote
+'should you want to load it into a spreadsheet.' anote
 FROM dual
 /
 
-COLUMN timestamp_0hr FORMAT A11   HEADING 'Timestamp|at hour 0' 
+COLUMN timestamp_0hr FORMAT A11   HEADING 'GMT Timestamp|at hour 0' 
 COLUMN danbot_score FORMAT 9.99   HEADING 'DanBot|Score|at hour 0' 
 COLUMN price_0hr    FORMAT 999.9999 HEADING 'Price at|hour 0'
 COLUMN price_1hr    FORMAT 999.9999 HEADING 'Price after|1 hour'
