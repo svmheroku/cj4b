@@ -43,6 +43,7 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
 
   it "Should run the sql script fx_past.sql" do
     `which sqt`.should == "/pt/s/rl/cj/bin/sqt\n"
+    `/bin/ls -l fx_past.sql`.should == "-rw-r--r-- 1 oracle oinstall 2938 2011-04-28 22:28 fx_past.sql\n"
     # The script should have an exit so it will not hang:
     `grep exit fx_past.sql`.should match /^exit\n/
     time0 = Time.now
@@ -55,6 +56,9 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     sql_output.should match /^Recyclebin purged/
     sql_output.should match /^@fx_past_week.sql 2011-05-08/
     sql_output.should match /^Disconnected from Oracle Database 11g /
+    # I should see 2 recent spool files:
+    (Time.now - File.ctime("/tmp/_fx_past_spool.html.erb")).should < 5
+    (Time.now - File.ctime("/tmp/fx_past_week.txt")).should < 5
   end
 ##
 
