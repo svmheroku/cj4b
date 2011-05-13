@@ -36,19 +36,29 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     # I should see a recent spool file:
     (Time.now - File.ctime("/tmp/_fx_new_spool.html.erb")).should < 9
     # Do a small edit:
-    `grep -v 'rows selected' /tmp/_fx_new_spool.html.erb > /tmp/tmp.html`
-    (Time.now - File.ctime("/tmp/tmp.html")).should < 2
+    `grep -v 'rows selected' /tmp/_fx_new_spool.html.erb > /tmp/fx_new.html`
+    (Time.now - File.ctime("/tmp/fx_new.html")).should < 2
   end
 ##
 
-  # I Use Nokogiri to massage the HTML in tmp.html and redirect it into a partial holding a table-element.
+  # I Use Nokogiri to massage the HTML in fx_new.html and redirect it into a partial holding a table-element.
   # The partial is here:
   # /pt/s/rl/bikle101/app/views/predictions/_fx_new_spool.html.erb
   # The partial is rendered in this file: 
   # app/views/predictions/fx_new.haml
 
-  it "Uses Nokogiri to massage tmp.html into a partial holding a table-element." do
-pending "some work"
+  it "Uses Nokogiri to massage fx_new.html into a partial holding a table-element." do
+    myf = File.open("/tmp/fx_new.html")
+    html_doc = Nokogiri::HTML(myf)
+    myf.close
+    table_elem = html_doc.search("table.table_fx_new").first
+    # Im done, write it to the Rails partial:
+    partial_fn = "/pt/s/rl/bikle101/app/views/predictions/_fx_new_spool.html.erb"
+    fhw = File.open(partial_fn,"w")
+    fhw.write(table_elem.to_html)
+    fhw.close
+    File.size(partial_fn).should > 1
+    `head -1 #{partial_fn}`.chomp.should == '<table class="table_fx_new">'
   end
 ##
 
