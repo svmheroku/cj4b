@@ -8,7 +8,6 @@
 # I use this script to generate a partial full of new predictions.
 
 require "/pt/s/rl/cj/spec_helper.rb"
-require "nokogiri"
 
 describe "cj helps me build both erb files and haml files which act as Rails templates" do
 
@@ -39,6 +38,17 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     # Do a small edit:
     `grep -v 'rows selected' /tmp/_fx_new_spool.html.erb > /tmp/tmp.html`
     (Time.now - File.ctime("/tmp/tmp.html")).should < 2
+  end
+##
+
+  # I Use Nokogiri to massage the HTML in tmp.html and redirect it into a partial holding a table-element.
+  # The partial is here:
+  # /pt/s/rl/bikle101/app/views/predictions/_fx_new_spool.html.erb
+  # The partial is rendered in this file: 
+  # app/views/predictions/fx_new.haml
+
+  it "Uses Nokogiri to massage tmp.html into a partial holding a table-element." do
+pending "some work"
   end
 ##
 
