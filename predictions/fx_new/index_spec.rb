@@ -52,6 +52,15 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     html_doc = Nokogiri::HTML(myf)
     myf.close
     table_elem = html_doc.search("table.table_fx_new").first
+
+      # Generate some a-elements from th-elements.
+      th_elems = table_elem.search("th")
+      th_elems.each {|elm| 
+        ei_h =   elm.inner_html
+        ei_hclass = ei_h.gsub(/\n/,'').gsub(/\<br\>/,'').gsub(/\<br \/>/,'').gsub(/ /,'').downcase
+        elm.inner_html = "<a href='#' class='#{ei_hclass}'>#{ei_h}</a>"
+      }
+
     # Im done, write it to the Rails partial:
     partial_fn = "/pt/s/rl/bikle101/app/views/predictions/_fx_new_spool.html.erb"
     fhw = File.open(partial_fn,"w")
