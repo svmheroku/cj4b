@@ -4,6 +4,7 @@
 
 @fxpst12.sql
 
+COLUMN pair          FORMAT A8  HEADING     'Currency|Pair'    
 COLUMN timestamp_0hr FORMAT A11   HEADING 'GMT Time|at hour 0' 
 COLUMN danbot_score FORMAT 9.99   HEADING 'DanBot|Score|at hour 0' 
 COLUMN price_0hr    FORMAT 999.9999 HEADING 'Price at|hour 0'
