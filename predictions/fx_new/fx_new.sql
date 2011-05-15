@@ -13,6 +13,7 @@ COLUMN price_1hr    FORMAT 999.9999 HEADING 'Price after|1 hour'
 COLUMN price_6hr    FORMAT 999.9999 HEADING 'Price after|6 hours'
 COLUMN gain_6hr1hr  FORMAT  99.9999 HEADING '5 hour gain|between|hr1 and hr6'
 COLUMN normalized_gain_5hr FORMAT 9.9999 HEADING 'Normalized|5hr gain'
+COLUMN normalized_gain_1hr FORMAT 9.9999 HEADING 'Normalized|1hr gain'
 
 SET TIME off TIMING off ECHO off PAGESIZE 1234 LINESIZE 188
 SET MARKUP HTML ON TABLE "class='table_fx_new'"
@@ -23,8 +24,9 @@ pair
 ,ydate timestamp_0hr
 ,ROUND(score_diff,4) danbot_score
 ,ROUND(price_0hr,4)  price_0hr
-,rnng_crr1
+-- ,rnng_crr1
 ,ROUND(price_1hr,4)  price_1hr
+,ROUND((price_1hr-price_0hr)/price_0hr,4)normalized_gain_1hr
 ,ROUND(price_6hr,4)  price_6hr
 ,ROUND(price_6hr-price_1hr,4)gain_6hr1hr
 ,ROUND((price_6hr-price_1hr)/price_0hr,4)normalized_gain_5hr
