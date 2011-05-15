@@ -29,7 +29,7 @@ pair
 ,ROUND(price_6hr-price_1hr,4)gain_6hr1hr
 ,ROUND((price_6hr-price_1hr)/price_0hr,4)normalized_gain_5hr
 FROM fxpst12
-WHERE rnng_crr1 > 0.0
+WHERE rnng_crr1 > 0.1
 AND score_diff < -0.55
 AND ydate > sysdate - 3
 ORDER BY pair,ydate

@@ -40,7 +40,7 @@ pair
 ,ROUND(MAX(g5),4)   max_5hr_n_gain
 ,ROUND(STDDEV(g5),4)stddev_5hr_n_gain
 FROM fxpst12
-WHERE rnng_crr1 > 0.0
+WHERE rnng_crr1 > 0.1
 AND score_diff < -0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
@@ -61,7 +61,7 @@ pair
 ,ROUND(MAX(g5),4)   max_5hr_n_gain
 ,ROUND(STDDEV(g5),4)stddev_5hr_n_gain
 FROM fxpst12
-WHERE rnng_crr1 > 0.0
+WHERE rnng_crr1 > 0.1
 AND score_diff > 0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
@@ -97,7 +97,7 @@ pair
 ,ROUND(price_6hr-price_1hr,4)gain_6hr1hr
 ,ROUND((price_6hr-price_1hr)/price_0hr,4)normalized_gain_5hr
 FROM fxpst12
-WHERE rnng_crr1 > 0.0
+WHERE rnng_crr1 > 0.1
 AND score_diff < -0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
@@ -115,7 +115,7 @@ pair
 ,ROUND(price_6hr-price_1hr,4)gain_6hr1hr
 ,ROUND((price_6hr-price_1hr)/price_0hr,4)normalized_gain_5hr
 FROM fxpst12
-WHERE rnng_crr1 > 0.0
+WHERE rnng_crr1 > 0.1
 AND score_diff > 0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'

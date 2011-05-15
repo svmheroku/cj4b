@@ -48,7 +48,7 @@ m.pair
 ,price_1hr
 ,price_6hr
 ,m.g6-m.g1 g5
-,CORR(l.score-s.score,g6)OVER(PARTITION BY l.pair ORDER BY l.ydate ROWS BETWEEN 12*24*1 PRECEDING AND CURRENT ROW)rnng_crr1
+,CORR(l.score-s.score,g6)OVER(PARTITION BY l.pair ORDER BY l.ydate ROWS BETWEEN 12*30*1 PRECEDING AND CURRENT ROW)rnng_crr1
 FROM svm62scores l,svm62scores s,fxpst10 m
 WHERE l.targ='gatt'
 AND   s.targ='gattn'
