@@ -33,7 +33,7 @@ pair
 FROM fxpst12
 WHERE rnng_crr1 > 0.1
 AND score_diff < -0.55
-AND ydate > sysdate - 3
+AND ydate > sysdate - 3/24
 ORDER BY pair,ydate
 /
 
