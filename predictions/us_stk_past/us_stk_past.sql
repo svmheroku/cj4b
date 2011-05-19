@@ -75,7 +75,14 @@ SET TIME off TIMING off ECHO off HEADING off
 SET MARKUP HTML ON TABLE "id='table_us_stk_past'" ENTMAP ON
 SPOOL /tmp/_us_stk_past_spool.html.erb
 
-select 'hello world'from dual;
+SELECT
+'Week: '||MIN(ydate)||' Through '||MAX(ydate) wweek
+FROM us_stk_pst13
+GROUP BY 
+TO_CHAR(ydate,'WW')
+ORDER BY 
+MIN(ydate)
+/
 
 SPOOL OFF
 SET MARKUP HTML OFF

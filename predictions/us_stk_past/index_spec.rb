@@ -60,8 +60,39 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     (Time.now - File.ctime("/tmp/_us_stk_past_spool.html.erb")).should < 9
     (Time.now - File.ctime("/tmp/us_stk_past_week.txt")).should < 9
     # Do a small edit:
-    `grep -v 'rows selected' /tmp/_us_stk_past_spool.html.erb > /tmp/tmp.html`
-    (Time.now - File.ctime("/tmp/tmp.html")).should < 2
+    `grep -v 'rows selected' /tmp/_us_stk_past_spool.html.erb > /tmp/tmp_us_stk.html`
+    (Time.now - File.ctime("/tmp/tmp_us_stk.html")).should < 2
+  end
+##
+
+  # Use Nokogiri to massage the HTML in tmp_us_stk.html and redirect it into the partial full of a-tags.
+  # The partial is here:
+  # /pt/s/rl/bikle101/app/views/predictions/_fx_past_spool.html.erb
+  # The partial is rendered in this file: 
+  # app/views/predictions/fx_past.haml
+
+  it "Should Use Nokogiri to transform tmp_us_stk.html into the partial full of a-tags." do
+    myf = File.open("/tmp/tmp_us_stk.html")
+    html_doc = Nokogiri::HTML(myf)
+    myf.close
+    td_elems = html_doc.search("td")
+    # I should see at least 1 row of history.
+    td_elems.size.should > 0
+
+    # Insert links inside each td-element:
+    td_elems.each{|td|
+      # Change Week: 2011-01-31 Through 2011-02-04
+      # to
+      # /predictions/us_stk_past_wk2011_01_31
+      hhref_tail = td.inner_html.gsub(/\n/,'').sub(/Week: /,'').sub(/ Through .*$/,'').gsub(/-/,'_')
+      hhref="/predictions/us_stk_past_wk#{hhref_tail}"
+      td.inner_html = "<a href='#{hhref}'>#{td.inner_html.gsub(/\n/,'')}</a>"
+    }
+    # Im done, write it to the Rails partial:
+    fhw = File.open("/pt/s/rl/bikle101/app/views/predictions/_us_stk_past_spool.html.erb","w")
+    fhw.write(html_doc.search("table#table_us_stk_past").to_html)
+    fhw.close
+
   end
 ##
 
