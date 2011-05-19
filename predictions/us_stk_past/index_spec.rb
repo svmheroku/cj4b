@@ -115,6 +115,8 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     sql_output.should match /^Disconnected from Oracle Database 11g /
 
     # I start by getting a list of spool files created by sqlplus:
+    glb = Dir.glob("/tmp/tmp_us_stk_past_week_20*.lst").sort
+    glb.size.should > 4
 
   end
 ##
