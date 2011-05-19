@@ -52,6 +52,23 @@ AND s.ydate > sysdate - 123
 
 ANALYZE TABLE us_stk_pst13 ESTIMATE STATISTICS SAMPLE 9 PERCENT;
 
+-- rpt
+-- This SELECT gives me a list of recent week-names.
+-- I use minday, maxday to help me understand the contents of each week.
+SELECT
+TO_CHAR(ydate,'WW')
+,MIN(ydate)
+,TO_CHAR(MIN(ydate),'Dy')minday
+,COUNT(ydate)
+,MAX(ydate)
+,TO_CHAR(MAX(ydate),'Dy')maxday
+FROM us_stk_pst13
+GROUP BY 
+TO_CHAR(ydate,'WW')
+ORDER BY 
+MIN(ydate)
+/
+
 -- This SELECT gives me text for a-tags
 ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD';
 SET TIME off TIMING off ECHO off HEADING off
@@ -60,6 +77,21 @@ SPOOL /tmp/_us_stk_past_spool.html.erb
 
 select 'hello world'from dual;
 
+SPOOL OFF
+SET MARKUP HTML OFF
+
+-- This SELECT gives me syntax to run a series of SQL scripts.
+-- Each script will give me data for 1 week.
+
+SPOOL /tmp/us_stk_past_week.txt
+SELECT
+'@us_stk_past_week.sql '||MIN(ydate) cmd
+FROM us_stk_pst13
+GROUP BY 
+TO_CHAR(ydate,'WW')
+ORDER BY 
+MIN(ydate)
+/
 SPOOL OFF
 
 exit

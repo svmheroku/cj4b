@@ -54,11 +54,11 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     sql_output.should match /^Oracle Database 11g Enterprise Edition /
     sql_output.should match /us_stk_past.sql/
     sql_output.should match /^Recyclebin purged/
-    # sql_output.should match /^@us_stk_past_week.sql 2011-05-08/
+    sql_output.should match /^@us_stk_past_week.sql 2011-05-09/
     sql_output.should match /^Disconnected from Oracle Database 11g /
     # I should see 2 recent spool files:
-    # (Time.now - File.ctime("/tmp/_us_stk_past_spool.html.erb")).should < 9
-    # (Time.now - File.ctime("/tmp/us_stk_past_week.txt")).should < 9
+    (Time.now - File.ctime("/tmp/_us_stk_past_spool.html.erb")).should < 9
+    (Time.now - File.ctime("/tmp/us_stk_past_week.txt")).should < 9
     # Do a small edit:
     `grep -v 'rows selected' /tmp/_us_stk_past_spool.html.erb > /tmp/tmp.html`
     (Time.now - File.ctime("/tmp/tmp.html")).should < 2
