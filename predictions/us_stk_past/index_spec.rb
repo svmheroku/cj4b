@@ -96,4 +96,27 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
   end
 ##
 
+  it "Should Fill each of the partials with data." do
+    # Start by pulling some syntax out of us_stk_past_week.txt
+    # which was created by my call to us_stk_past.sql
+    `grep us_stk_past_week.sql /tmp/us_stk_past_week.txt > /tmp/run_us_stk_past_week.sql`
+
+    `echo exit >> /tmp/run_us_stk_past_week.sql`
+    (Time.now - File.ctime("/tmp/run_us_stk_past_week.sql")).should < 2
+    # I should see more than 5 SQL calls in /tmp/run_us_stk_past_week.sql:
+    `cat /tmp/run_us_stk_past_week.sql|wc -l`.chomp.to_i.should > 5
+    p "Now calling sqlplus:"
+    p "sqt @/tmp/run_us_stk_past_week.sql"
+    sql_output = `sqt @/tmp/run_us_stk_past_week.sql`
+    sql_output.should match /^Connected to:\n/
+    sql_output.should match /^Oracle Database 11g Enterprise Edition /
+    sql_output.should match /us_stk_past_week.sql/
+    sql_output.should match /rows selected/
+    sql_output.should match /^Disconnected from Oracle Database 11g /
+
+    # I start by getting a list of spool files created by sqlplus:
+
+  end
+##
+
 end
