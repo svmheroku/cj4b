@@ -11,8 +11,8 @@
 -- Start by showing summarized data for each tkr:
 
 COLUMN tkr FORMAT A8  HEADING  'Stock|Ticker'
-COLUMN avg_tkr_price    FORMAT 9999.99  HEADING 'Avg|Ticker|Price'
-COLUMN avg_danbot_score FORMAT 9.99    HEADING 'Avg|DanBot|Score'
+COLUMN avg_tkr_price    FORMAT 9999.99  HEADING 'Avg|Ticker|Price|at Hour 0'
+COLUMN avg_danbot_score FORMAT 9.99    HEADING 'Avg|DanBot|Score|at Hour 0'
 COLUMN sharpe_ratio     FORMAT 9999.99 HEADING 'Sharpe|Ratio'  
 COLUMN avg_24hr_gain    FORMAT 999.99  HEADING 'Avg|24hr|Gain'
 COLUMN position_count   FORMAT 99999   HEADING 'Count of|positions'  
@@ -85,7 +85,7 @@ FROM dual
 COLUMN tkr FORMAT A10  HEADING  'Stock|Ticker'
 COLUMN gmt_time_at_hr0 FORMAT A11  HEADING 'GMT Time|at hour 0' 
 COLUMN price_at_hr0 FORMAT 9999.99 HEADING 'Price|at|Hour 0'
-COLUMN danbot_score FORMAT 9.99    HEADING 'DanBot|Score'
+COLUMN danbot_score FORMAT 9.99    HEADING 'DanBot|Score at|Hour 0'
 COLUMN gain_at_hr1  FORMAT 9999.99 HEADING 'Gain|at|Hour 1'
 COLUMN gain_at_hr24 FORMAT 9999.99 HEADING 'Gain|at|Hour 24'
 
@@ -101,7 +101,6 @@ tkr
 ,ROUND(g24hr,2)      gain_at_hr24           
 FROM us_stk_pst13
 WHERE rnng_crr1 > 0.1
--- AND score_diff < -0.55
 AND ABS(score_diff) > 0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
