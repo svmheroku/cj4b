@@ -26,7 +26,7 @@ COMPUTE SUM LABEL 'Sum:' OF sum_24hr_gain ON REPORT
 COMPUTE SUM LABEL 'Sum:' OF position_count ON REPORT
 
 SET TIME off TIMING off ECHO off PAGESIZE 9999 LINESIZE 188
--- SET MARKUP HTML ON TABLE "class='table_us_stk_past_week'"
+SET MARKUP HTML ON TABLE "class='table_us_stk_past_week'"
 SPOOL /tmp/tmp_us_stk_past_week_&1
 
 SELECT
@@ -58,25 +58,6 @@ FROM dual
 
 SELECT
 tkr
-,ROUND(AVG(price_0hr),2)             avg_tkr_price
-,ROUND(AVG(score_diff),2)            avg_danbot_score
-,ROUND(AVG(g24hr) / STDDEV(g24hr),2) sharpe_ratio
-,ROUND(AVG(g1hr),2)                  avg_1hr_gain
-,ROUND(AVG(g24hr),2)                 avg_24hr_gain
-,COUNT(g24hr)                        position_count
-,ROUND(SUM(g24hr),2)                 sum_24hr_gain
-,ROUND(STDDEV(g24hr),2)              stddev_24hr_gain
-FROM us_stk_pst13
-WHERE rnng_crr1 > 0.1
-AND score_diff > 0.55
-AND ydate > '&1'
-AND ydate - 7 < '&1'
-GROUP BY tkr
-HAVING STDDEV(g24hr) > 0
-ORDER BY tkr
-
-SELECT
-tkr
 ,ROUND(AVG(price_0hr),2)  avg_tkr_price
 ,ROUND(AVG(score_diff),2) avg_danbot_score
 ,CASE WHEN STDDEV(g24hr)=0 THEN ROUND((AVG(g24hr)/0.01),2)
@@ -94,8 +75,6 @@ AND ydate - 7 < '&1'
 GROUP BY tkr
 ORDER BY tkr
 /
-
-exit
 
 SELECT
 'The above tables are summaries of predictions. Individual high-confidence-predictions are displayed below '||
@@ -126,7 +105,7 @@ WHERE rnng_crr1 > 0.1
 AND ABS(score_diff) > 0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
-ORDER BY SIGN(score_diff),tkr
+ORDER BY SIGN(score_diff),tkr,ydate
 /
 
 SPOOL OFF
