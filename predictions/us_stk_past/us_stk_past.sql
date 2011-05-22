@@ -11,7 +11,7 @@ tkr
 ,tkrdate
 ,clse  price_0hr
 ,clse2 price_24hr
-,gain1day
+,gain1day g24hr
 ,selldate
 ,LEAD(clse,12*1,NULL)OVER(PARTITION BY tkr ORDER BY ydate) price_1hr
 ,(LEAD(clse,12*1,NULL)OVER(PARTITION BY tkr ORDER BY ydate)-clse) g1hr
@@ -33,13 +33,13 @@ m.tkr
 ,(l.score-s.score)        score_diff
 ,ROUND(l.score-s.score,1) rscore_diff1
 ,ROUND(l.score-s.score,2) rscore_diff2
-,m.gain1day
+,m.g1hr
+,m.g24hr
 ,m.selldate
 ,m.price_0hr
 ,m.price_1hr
 ,m.price_24hr
-,m.g1hr
-,CORR(l.score-s.score,m.gain1day)OVER(PARTITION BY l.tkr ORDER BY l.ydate ROWS BETWEEN 12*24*5 PRECEDING AND CURRENT ROW)rnng_crr1
+,CORR(l.score-s.score,m.g24hr)OVER(PARTITION BY l.tkr ORDER BY l.ydate ROWS BETWEEN 12*24*5 PRECEDING AND CURRENT ROW)rnng_crr1
 FROM stkscores l,stkscores s,us_stk_pst11 m
 WHERE l.targ='gatt'
 AND   s.targ='gattn'

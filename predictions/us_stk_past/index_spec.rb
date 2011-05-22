@@ -50,6 +50,7 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     sql_output = `sqt @us_stk_past.sql`
     # The sql script should need at least 3 seconds to finish:
     # (Time.now - time0).should > 2
+    sql_output.should_not match /^ERROR/
     sql_output.should match /^Connected to:\n/
     sql_output.should match /^Oracle Database 11g Enterprise Edition /
     sql_output.should match /us_stk_past.sql/
