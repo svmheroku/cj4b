@@ -12,10 +12,10 @@
 
 COLUMN pair             FORMAT A8  HEADING     'Currency|Pair'    
 COLUMN avg_danbot_score FORMAT 9.99 HEADING    'Avg|DanBot|Score' 
-COLUMN sharpe_ratio     FORMAT 9999.99 HEADING 'Sharpe|Ratio'     
+COLUMN sharpe_ratio     FORMAT 9999.99 HEADING 'Sharpe|Ratio'  
 COLUMN avg_1hr_n_gain   FORMAT 99.9999 HEADING 'Avg of|normalized|1hr gains'   
 COLUMN avg_5hr_n_gain   FORMAT 99.9999 HEADING 'Avg of|normalized|5hr gains'   
-COLUMN position_count   FORMAT 9999  HEADING   'Count of|positions'   
+COLUMN position_count   FORMAT 9999  HEADING   'Count of|positions'  
 COLUMN sum_5hr_n_gain   FORMAT 99.9999 HEADING 'Sum of|normalized|5hr gains'   
 COLUMN min_5hr_n_gain   FORMAT 99.9999 HEADING 'Min of|normalized|5hr gains'
 COLUMN max_5hr_n_gain   FORMAT 99.9999 HEADING 'Max of|normalized|5hr gains'   
