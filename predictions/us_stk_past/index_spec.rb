@@ -9,18 +9,18 @@
 # Week: 2011-02-20 Through 2011-02-25
 
 # The a-tags will land in this file:
-# /pt/s/rl/bikle101/app/views/predictions/_us_stk_past_spool.html.erb
+# ./us_stk_past/_us_stk_past_spool.html.erb
 # which is a partial in this file:
-# /pt/s/rl/bikle101/app/views/predictions/us_stk_past.haml
+# ./us_stk_past/index.haml
 
 # Each a-tag will take me to a set of reports for a specific week.
 # The reports will show:
 # - Action (buy or sell) summaries
-# - pair summaries
+# - Stock Ticker summaries
 # - Details of all predictions
 
 # Here is some haml which serves as a demo of what I want an a-tag to look like:
-# %a(href="/predictions/us_stk_past_wk2011_02_20")
+# %a(href="/us_stk_past/us_stk_past_wk2011_02_20")
 #   Week: 2011-02-20 Through 2011-02-25
 
 # I use us_stk_past.sql to get the data via a join of 3 types of tables:
@@ -68,9 +68,9 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
 
   # Use Nokogiri to massage the HTML in tmp_us_stk.html and redirect it into the partial full of a-tags.
   # The partial is here:
-  # /pt/s/rl/bikle101/app/views/predictions/_fx_past_spool.html.erb
+  # ./us_stk_past/_fx_past_spool.html.erb
   # The partial is rendered in this file: 
-  # app/views/predictions/fx_past.haml
+  # app/views/us_stk_past/index.haml
 
   it "Should Use Nokogiri to transform tmp_us_stk.html into the partial full of a-tags." do
     myf = File.open("/tmp/tmp_us_stk.html")
@@ -84,13 +84,13 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     td_elems.each{|td|
       # Change Week: 2011-01-31 Through 2011-02-04
       # to
-      # /predictions/us_stk_past_wk2011_01_31
+      # /us_stk_past/us_stk_past_wk2011_01_31
       hhref_tail = td.inner_html.gsub(/\n/,'').sub(/Week: /,'').sub(/ Through .*$/,'').gsub(/-/,'_')
-      hhref="/predictions/us_stk_past_wk#{hhref_tail}"
+      hhref="/us_stk_past/us_stk_past_wk#{hhref_tail}"
       td.inner_html = "<a href='#{hhref}'>#{td.inner_html.gsub(/\n/,'')}</a>"
     }
     # Im done, write it to the Rails partial:
-    fhw = File.open("/pt/s/rl/bikle101/app/views/predictions/_us_stk_past_spool.html.erb","w")
+    fhw = File.open("./us_stk_past/_us_stk_past_spool.html.erb","w")
     fhw.write(html_doc.search("table#table_us_stk_past").to_html)
     fhw.close
 
@@ -123,7 +123,7 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
       # Make a note of the filename:
       p "Input file is #{fn}"
       # For each file, make note of the date embedded in the filename.
-      # The date should be a Monday.
+      # The date should usually be a Monday.
       # I use the date to identify a weeks worth of data:
       the_date = fn.sub(/tmp_us_stk_past_week_/,'').sub(/.lst/,'').gsub(/-/,'_').sub(/\/.*\//,'')
       the_date.should match /^201._.._../
@@ -133,7 +133,7 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
       site_map    = '<a href="/r10/site_map">Site Map</a>'
       predictions = '<a href="/predictions">Predictions</a>'
       us_stk       = '<a href="/predictions/us_stk">US Stocks</a>'
-      past_us_stk_predictions = '<a href="/predictions/us_stk_past">Past US Stocks Predictions</a>'
+      past_us_stk_predictions = '<a href="/us_stk_past">Past US Stocks Predictions</a>'
       bread_crumbs = "#{site_map} > #{predictions} > #{us_stk} > #{past_us_stk_predictions} > Week of: #{the_date}"
 
       # generate h4-element from the_date
@@ -146,7 +146,7 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
 
       # I want a file for this URL pattern:
       # href="/predictions/us_stk_past_wk2011_01_30"
-      html_f = File.new("/pt/s/rl/bikle101/app/views/predictions/us_stk_past_wk#{the_date}.html.erb", "w")
+      html_f = File.new("./us_stk_past/us_stk_past_wk#{the_date}.html.erb", "w")
 
       # Maybe I will find a table_element in that file which interests me.
       table_elem = html_doc.search("table")[0]
