@@ -52,7 +52,8 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     html_doc = Nokogiri::HTML(myf)
     myf.close
     table_elem = html_doc.search("table.table_fx_new").first
-
+    html4partial = "No predictions have been calculated for this time period."
+    unless table_elem.nil?
       # Generate some a-elements from th-elements.
       th_elems = table_elem.search("th")
       th_elems.each {|elm| 
@@ -60,14 +61,15 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
         ei_hclass = ei_h.gsub(/\n/,'').gsub(/\<br\>/,'').gsub(/\<br \/>/,'').gsub(/ /,'').downcase
         elm.inner_html = "<a href='#' class='#{ei_hclass}'>#{ei_h}</a>"
       }
+      html4partial = table_elem.to_html
+    end
 
     # Im done, write it to the Rails partial:
     partial_fn = "./fx_new/_fx_new_spool.html.erb"
     fhw = File.open(partial_fn,"w")
-    fhw.write(table_elem.to_html)
+    fhw.write(html4partial)
     fhw.close
     File.size(partial_fn).should > 1
-    `head -1 #{partial_fn}`.chomp.should == '<table class="table_fx_new">'
   end
 ##
 
