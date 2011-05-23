@@ -43,9 +43,9 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
 
   # I Use Nokogiri to massage the HTML in fx_new.html and redirect it into a partial holding a table-element.
   # The partial is here:
-  # /pt/s/rl/bikle101/app/views/predictions/_fx_new_spool.html.erb
+  # ./fx_new/_fx_new_spool.html.erb
   # The partial is rendered in this file: 
-  # app/views/predictions/fx_new.haml
+  # ./fx_new/index.haml
 
   it "Uses Nokogiri to massage fx_new.html into a partial holding a table-element." do
     myf = File.open("/tmp/fx_new.html")
@@ -62,7 +62,7 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
       }
 
     # Im done, write it to the Rails partial:
-    partial_fn = "/pt/s/rl/bikle101/app/views/predictions/_fx_new_spool.html.erb"
+    partial_fn = "./fx_new/_fx_new_spool.html.erb"
     fhw = File.open(partial_fn,"w")
     fhw.write(table_elem.to_html)
     fhw.close
