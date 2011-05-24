@@ -22,7 +22,6 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
 
   it "Should run the sql script fx_new.sql" do
     `which sqt`.should == "/pt/s/rl/cj/bin/sqt\n"
-    # `/bin/ls -l fx_new.sql`.should == "hello"
     # The script should have an exit so it will not hang:
     `grep exit fx_new.sql`.should match /^exit\n/
     time0 = Time.now

@@ -33,7 +33,8 @@ pair
 FROM fxpst12
 WHERE rnng_crr1 > 0.1
 AND score_diff < -0.55
-AND ydate > sysdate - 3/24
+-- AND ydate > sysdate - 3/24
+AND ydate > (SELECT MAX(ydate)-5/24 FROM fxpst12)
 ORDER BY pair,ydate
 /
 
