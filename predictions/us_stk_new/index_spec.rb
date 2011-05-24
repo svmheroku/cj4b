@@ -24,6 +24,19 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     `which sqt`.should == "/pt/s/rl/cj/bin/sqt\n"
     # The script should have an exit so it will not hang:
     `grep exit us_stk_new.sql`.should match /^exit\n/
+    time0 = Time.now
+    sql_output = `sqt @us_stk_new.sql`
+    # The sql script should need at least 3 seconds to finish:
+    # (Time.now - time0).should > 2
+    sql_output.should match /^Connected to:\n/
+    sql_output.should match /^Oracle Database 11g Enterprise Edition /
+    sql_output.should match /us_stk_new.sql/
+    sql_output.should match /^Disconnected from Oracle Database 11g /
+    # I should see a recent spool file:
+    (Time.now - File.ctime("/tmp/_us_stk_new_spool.html.erb")).should < 9
+    # Do a small edit:
+    `grep -v 'rows selected' /tmp/_us_stk_new_spool.html.erb > /tmp/us_stk_new.html`
+    (Time.now - File.ctime("/tmp/us_stk_new.html")).should < 2
   end
 ##
 end
