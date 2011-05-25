@@ -61,6 +61,16 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
         ei_hclass = ei_h.gsub(/\n/,'').gsub(/\<br\>/,'').gsub(/\<br \/>/,'').gsub(/ /,'').downcase
         elm.inner_html = "<a href='#' class='#{ei_hclass}'>#{ei_h}</a>"
       }
+      # Generate some a-elements from td-elements containing tickers.
+      td_elems = table_elem.search("td")
+      # Look at every td-element and see if it matches a simple reg-exp for a string of upper-case chars:
+      td_elems.each {|elm|
+        ei_h = elm.inner_html
+        if ei_h =~ /(tkr: )([A-Z]+)/
+          mytkr = $2
+          elm.inner_html = "<a target='y' href='http://finance.yahoo.com/q?s=#{mytkr}'>#{mytkr}</a>"
+        end
+      }
       # Overwrite the default:
       html4partial = table_elem.to_html
     end
