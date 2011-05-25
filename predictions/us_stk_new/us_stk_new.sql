@@ -21,11 +21,11 @@ tkr
 ,ROUND(price_0hr,2)  price_at_hr0           
 ,ROUND(score_diff,2) danbot_score           
 ,ROUND(g1hr,2)       gain_at_hr1            
-,ROUND(g24hr,2)      gain_at_hr24           
+-- ,ROUND(g24hr,2)      gain_at_hr24           
 FROM us_stk_pst13
 WHERE rnng_crr1 > 0.1
 AND ABS(score_diff) > 0.55
-AND ydate > (SELECT MAX(ydate)FROM us_stk_pst13) - 3/24
+AND ydate > (SELECT MAX(ydate)FROM us_stk_pst13) - 6/24
 ORDER BY SIGN(score_diff),tkr,ydate
 /
 

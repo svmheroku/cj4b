@@ -39,5 +39,40 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
     (Time.now - File.ctime("/tmp/us_stk_new.html")).should < 2
   end
 ##
+
+  # I Use Nokogiri to massage the HTML in us_stk_new.html and redirect it into a partial holding a table-element.
+  # The partial is here:
+  # ./us_stk_new/_us_stk_new_spool.html.erb
+  # The partial is rendered in this file: 
+  # ./us_stk_new/index.haml
+
+  it "Uses Nokogiri to massage us_stk_new.html into a partial holding a table-element." do
+    myf = File.open("/tmp/us_stk_new.html")
+    html_doc = Nokogiri::HTML(myf)
+    myf.close
+    table_elem = html_doc.search("table.table_us_stk_new").first
+    # Fill html4partial with a default message:
+    html4partial = "No predictions have been calculated for this time period."
+    unless table_elem.nil?
+      # Generate some a-elements from th-elements.
+      th_elems = table_elem.search("th")
+      th_elems.each {|elm| 
+        ei_h =   elm.inner_html
+        ei_hclass = ei_h.gsub(/\n/,'').gsub(/\<br\>/,'').gsub(/\<br \/>/,'').gsub(/ /,'').downcase
+        elm.inner_html = "<a href='#' class='#{ei_hclass}'>#{ei_h}</a>"
+      }
+      # Overwrite the default:
+      html4partial = table_elem.to_html
+    end
+
+    # Im done, write it to the Rails partial:
+    partial_fn = "./us_stk_new/_us_stk_new_spool.html.erb"
+    fhw = File.open(partial_fn,"w")
+    fhw.write(html4partial)
+    fhw.close
+    File.size(partial_fn).should > 1
+  end
+##
+
 end
 
