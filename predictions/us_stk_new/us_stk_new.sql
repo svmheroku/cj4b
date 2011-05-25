@@ -18,7 +18,7 @@ COLUMN gain_at_hr24 FORMAT 9999.99 HEADING 'Gain|at|Hour 24'
 COLUMN gmt_time_at_hr24 FORMAT A25  HEADING 'GMT Time|at hour 24|(Time to Close Position)' 
 
 SELECT
-'tkr: '||tkr
+'tkr: '||tkr tkr
 ,ydate gmt_time_at_hr0
 ,ROUND(price_0hr,2)  price_at_hr0           
 ,ROUND(score_diff,2) danbot_score
