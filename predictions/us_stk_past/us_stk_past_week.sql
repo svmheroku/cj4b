@@ -41,7 +41,7 @@ tkr
 ,ROUND(SUM(g24hr),2)   sum_24hr_gain
 ,ROUND(STDDEV(g24hr),2)stddev_24hr_gain
 FROM us_stk_pst13
-WHERE rnng_crr1 > 0.1
+WHERE rnng_crr1 > 0
 AND score_diff < -0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
@@ -75,7 +75,7 @@ tkr
 ,ROUND(SUM(g24hr),2)   sum_24hr_gain
 ,ROUND(STDDEV(g24hr),2)stddev_24hr_gain
 FROM us_stk_pst13
-WHERE rnng_crr1 > 0.1
+WHERE rnng_crr1 > 0
 AND score_diff > 0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
@@ -112,7 +112,7 @@ tkr
 ,ROUND(g1hr,2)       gain_at_hr1            
 ,ROUND(g24hr,2)      gain_at_hr24           
 FROM us_stk_pst13
-WHERE rnng_crr1 > 0.1
+WHERE rnng_crr1 > 0
 AND ABS(score_diff) > 0.55
 AND ydate > '&1'
 AND ydate - 7 < '&1'
