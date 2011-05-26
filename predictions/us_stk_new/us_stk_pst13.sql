@@ -40,15 +40,16 @@ m.tkr
 ,m.price_0hr
 ,m.price_1hr
 ,m.price_24hr
-,CORR(l.score-s.score,m.g24hr)OVER(PARTITION BY l.tkr ORDER BY l.ydate ROWS BETWEEN 12*24*5 PRECEDING AND CURRENT ROW)rnng_crr1
+-- ,CORR(l.score-s.score,m.g24hr)OVER(PARTITION BY l.tkr ORDER BY l.ydate ROWS BETWEEN 12*24*5 PRECEDING AND CURRENT ROW)rnng_crr1
+,COVAR_POP(l.score-s.score,m.g24hr)OVER(PARTITION BY l.tkr ORDER BY l.ydate ROWS BETWEEN 12*24*5 PRECEDING AND CURRENT ROW)rnng_crr1
 FROM stkscores l,stkscores s,us_stk_pst11 m
 WHERE l.targ='gatt'
 AND   s.targ='gattn'
 AND l.tkrdate = s.tkrdate
 AND l.tkrdate = m.tkrdate
 -- Speed things up:
-AND l.ydate > sysdate - 123
-AND s.ydate > sysdate - 123
+AND l.ydate > '2011-01-30'
+AND s.ydate > '2011-01-30'
 /
 
 ANALYZE TABLE us_stk_pst13 ESTIMATE STATISTICS SAMPLE 9 PERCENT;

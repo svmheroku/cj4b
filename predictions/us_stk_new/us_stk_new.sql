@@ -27,7 +27,7 @@ SELECT
 ,ydate+1 gmt_time_at_hr24
 -- ,ROUND(g24hr,2)      gain_at_hr24           
 FROM us_stk_pst13
-WHERE rnng_crr1 > 0.1
+WHERE rnng_crr1 > 0
 AND ABS(score_diff) > 0.55
 AND ydate > (SELECT MAX(ydate)FROM us_stk_pst13) - 6/24
 ORDER BY SIGN(score_diff),tkr,ydate
