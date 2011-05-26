@@ -60,6 +60,20 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
         ei_hclass = ei_h.gsub(/\n/,'').gsub(/\<br\>/,'').gsub(/\<br \/>/,'').gsub(/ /,'').gsub(/\(/,'').gsub(/\)/,'').downcase
         elm.inner_html = "<a href='#' class='#{ei_hclass}'>#{ei_h}</a>"
       }
+
+      # Generate some a-elements from td-elements containing pair-symbols.
+      td_elems = table_elem.search("td")
+      # Look at every td-element and see if it matches a simple reg-exp for a string of 7 chars:
+      td_elems.each {|elm|
+        ei_h = elm.inner_html
+        if ei_h =~ /(\w\w\w_\w\w\w)/
+          mypair1 = $1
+          mypair2 = mypair1.sub(/_/,'')
+          elm.inner_html = "<a target='y' href='http://finance.yahoo.com/q?s=#{mypair2}=X'>#{mypair1}</a>"
+        end
+      }
+
+      # Overwrite the default:
       html4partial = table_elem.to_html
     end
 
