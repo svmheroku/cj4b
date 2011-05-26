@@ -50,11 +50,17 @@ GROUP BY tkr
 ORDER BY tkr
 /
 
-COLUMN anote FORMAT A74 HEADING 'Note:'
+COLUMN anote FORMAT A120 HEADING 'Note:'
 
-SELECT
-'The table above displays negative DanBot scores, the table below displays positive DanBot scores.' anote
-FROM dual
+SELECT anote FROM
+(
+SELECT'When I sell, I want the gain to be negative, and when I buy I want it be positive.'anote FROM dual
+UNION
+SELECT'The table above displays negative DanBot scores which were signals to sell.'anote FROM dual
+UNION
+SELECT'Below, are positive DanBot scores which were signals to buy.'anote FROM dual
+)
+ORDER BY anote DESC
 /
 
 SELECT
@@ -78,10 +84,14 @@ GROUP BY tkr
 ORDER BY tkr
 /
 
+SELECT anote FROM
+(
+SELECT'The above tables are summaries of predictions.'anote FROM dual
+UNION
 SELECT
-'The above tables are summaries of predictions. Individual high-confidence-predictions are displayed below '||
-'should you want to load them into a spreadsheet.' anote
-FROM dual
+'Individual high-confidence-predictions are displayed below should you want to load them into a spreadsheet.'anote FROM dual
+)
+ORDER BY anote DESC
 /
 
 COLUMN tkr FORMAT A10  HEADING  'Stock|Ticker'

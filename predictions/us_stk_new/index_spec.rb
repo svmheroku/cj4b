@@ -58,7 +58,7 @@ describe "cj helps me build both erb files and haml files which act as Rails tem
       th_elems = table_elem.search("th")
       th_elems.each {|elm| 
         ei_h =   elm.inner_html
-        ei_hclass = ei_h.gsub(/\n/,'').gsub(/\<br\>/,'').gsub(/\<br \/>/,'').gsub(/ /,'').downcase
+        ei_hclass=ei_h.gsub(/\n/,'').gsub(/\<br\>/,'').gsub(/\<br \/>/,'').gsub(/ /,'').sub(/\(/,'').sub(/\)/,'').downcase
         elm.inner_html = "<a href='#' class='#{ei_hclass}'>#{ei_h}</a>"
       }
       # Generate some a-elements from td-elements containing tickers.
